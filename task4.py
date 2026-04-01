@@ -85,7 +85,7 @@ predictions = model.transform(stream_with_features) # Replace None with your imp
 
 # TODO: Calculate the 'deviation' between the actual 'fare_amount' and the 'prediction'.
 # HINT: Use withColumn and the abs_diff function.
-predictions_with_deviation = predictions.withColumn("deviation", abs_diff(col("fare_amount"), col("prediction"))) # Replace None with your implementation
+predictions_with_deviation = predictions.withColumn("deviation", abs_diff(col("fare_amount") - col("prediction"))) # Replace None with your implementation
 
 # Select the final columns to display in the output
 output_df = predictions_with_deviation.select(

@@ -5,6 +5,9 @@ from pyspark.sql.functions import from_json, col, avg, window, hour, minute
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, TimestampType
 
 # TODO: Import VectorAssembler, LinearRegression, and LinearRegressionModel from pyspark.ml
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.regression import LinearRegressionModel
 
 # Initialize Spark Session
 spark = SparkSession.builder.appName("Task7_FareTrendPrediction_Assignment").getOrCreate()
@@ -25,7 +28,7 @@ if not os.path.exists(MODEL_PATH):
 
     # TODO: Aggregate data into 5-minute time windows, calculating the average fare.
     # HINT: Use groupBy(window(...)) and agg(avg(...)).
-    hist_windowed_df = None # Replace None with your implementation
+    hist_windowed_df = hist_df_processed.groupBy(window("event_time", "5 minutes")).agg(avg("fare_amount").alias("avg_fare")) # Replace None with your implementation
 
     # TODO: Engineer time-based features from the window's start time.
     # Add two new columns: 'hour_of_day' and 'minute_of_hour'.
